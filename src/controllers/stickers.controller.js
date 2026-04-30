@@ -1,3 +1,5 @@
+import { teamOrder } from "../data/stickers.js";
+
 import Sticker from "../models/sticker.model.js";
 
 export const getAllStickers = async (req, res) => {
@@ -62,23 +64,33 @@ export const getHome = async (req, res) => {
   try {
     const stickers = await Sticker.find().lean();
 
+    const orderMap = new Map(
+      teamOrder.flatMap((team) =>
+        Array.from({ length: 20 }, (_, i) => [`${team}${i + 1}`, i]),
+      ),
+    );
+
+    const isSpecial = (code) =>
+      code.startsWith("FWC") || code.startsWith("STA");
+
     stickers.sort((a, b) => {
-      const parse = (code) => {
-        const match = code.match(/^([A-Z]+)(\d+)$/);
-        return {
-          prefix: match[1],
-          number: parseInt(match[2], 10),
-        };
-      };
+      const aSpecial = isSpecial(a.code);
+      const bSpecial = isSpecial(b.code);
 
-      const A = parse(a.code);
-      const B = parse(b.code);
+      // 1. especiales primero
+      if (aSpecial && !bSpecial) return -1;
+      if (!aSpecial && bSpecial) return 1;
 
-      if (A.prefix !== B.prefix) {
-        return A.prefix.localeCompare(B.prefix);
+      // 2. entre especiales (orden simple)
+      if (aSpecial && bSpecial) {
+        return a.code.localeCompare(b.code);
       }
 
-      return A.number - B.number;
+      // 3. equipos (orden mundial)
+      const aIndex = orderMap.get(a.code) ?? 999999;
+      const bIndex = orderMap.get(b.code) ?? 999999;
+
+      return aIndex - bIndex;
     });
 
     const groupedStickers = stickers.reduce((groups, sticker) => {
@@ -105,18 +117,6 @@ export const getHome = async (req, res) => {
 
     const missingCount = stickers.filter((s) => s.status === "missing").length;
 
-    const isSpecial = (code) => {
-      return code?.endsWith("0") || code?.startsWith("FWC");
-    };
-
-    const specialStickers = stickers.filter((s) => isSpecial(s.code));
-
-    const specialOwned = specialStickers.filter(
-      (s) => s.status === "owned",
-    ).length;
-
-    const specialTotal = specialStickers.length;
-
     const completedCount = stickers.filter(
       (s) => s.status === "owned" || s.status === "duplicate",
     ).length;
@@ -130,8 +130,6 @@ export const getHome = async (req, res) => {
       ownedCount,
       dupCount,
       missingCount,
-      specialOwned,
-      specialTotal,
       completion,
     });
   } catch (error) {
@@ -142,10 +140,64 @@ export const getHome = async (req, res) => {
 
 const sectionNames = {
   FWC: "Especiales 🏆",
-  STA: "Estadios 🏟️",
+
+  // CONCACAF
+  USA: "Estados Unidos",
   MEX: "México",
+  CAN: "Canadá",
+  PAN: "Panamá",
+  HAI: "Haití",
+  CUW: "Curazao",
+
+  // CONMEBOL
   ARG: "Argentina",
   BRA: "Brasil",
   URU: "Uruguay",
   COL: "Colombia",
+  ECU: "Ecuador",
+  PAR: "Paraguay",
+
+  // UEFA
+  ENG: "Inglaterra",
+  FRA: "Francia",
+  ESP: "España",
+  GER: "Alemania",
+  NED: "Países Bajos",
+  POR: "Portugal",
+  BEL: "Bélgica",
+  CRO: "Croacia",
+  SUI: "Suiza",
+  AUT: "Austria",
+  NOR: "Noruega",
+  SCO: "Escocia",
+  SWE: "Suecia",
+  TUR: "Turquía",
+  BIH: "Bosnia y Herzegovina",
+  CZE: "Republica Checa",
+
+  // CAF
+  MAR: "Marruecos",
+  SEN: "Senegal",
+  EGY: "Egipto",
+  ALG: "Argelia",
+  GHA: "Ghana",
+  CIV: "Costa de Marfil",
+  TUN: "Túnez",
+  RSA: "Sudáfrica",
+  CPV: "Cabo Verde",
+  COD: "República Democrática del Congo",
+
+  // AFC
+  JPN: "Japón",
+  KOR: "Corea del Sur",
+  IRN: "Irán",
+  AUS: "Australia",
+  KSA: "Arabia Saudita",
+  QAT: "Qatar",
+  UZB: "Uzbekistán",
+  JOR: "Jordania",
+  IRQ: "Irak",
+
+  // OFC
+  NZL: "Nueva Zelanda",
 };
