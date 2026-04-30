@@ -1,18 +1,34 @@
-const stickers = document.querySelectorAll(".sticker");
 const btns = document.querySelectorAll(".btn");
 
+function getStickers() {
+  return Array.from(document.querySelectorAll(".sticker"));
+}
+
 function updateCounters() {
-  const total = document.querySelectorAll(".sticker").length;
+  const stickers = getStickers();
 
-  const owned =
-    document.querySelectorAll(".sticker.owned").length +
-    document.querySelectorAll(".sticker.duplicate").length;
+  let total = stickers.length;
+  let owned = 0;
+  let duplicate = 0;
+  let missing = 0;
 
-  const duplicate = document.querySelectorAll(".sticker.duplicate").length;
+  stickers.forEach((s) => {
+    const status = s.dataset.status;
 
-  document.querySelector(".stat-total").textContent = `Total: ${total}`;
-  document.querySelector(".stat-owned").textContent = `Tengo: ${owned}`;
-  document.querySelector(".stat-dup").textContent = `Repetidas: ${duplicate}`;
+    if (status === "owned") owned++;
+    else if (status === "duplicate") duplicate++;
+    else missing++;
+  });
+
+  const completion = total
+    ? Math.round(((owned + duplicate) / total) * 100)
+    : 0;
+
+  setSummary("owned", owned + duplicate);
+  setSummary("missing", missing);
+  setSummary("duplicate", duplicate);
+  setSummary("total", total);
+  setSummary("completion", `${completion}%`);
 }
 
 function updateSections() {
@@ -26,10 +42,15 @@ function updateSections() {
 }
 
 function applyCurrentFilter() {
-  const filter = document.querySelector(".btn.active").dataset.filter;
+  const filter = document.querySelector(".btn.active")?.dataset.filter || "all";
 
-  stickers.forEach((sticker) => {
-    const show = filter === "all" || sticker.dataset.status === filter;
+  getStickers().forEach((sticker) => {
+    const status = sticker.dataset.status;
+
+    const show =
+      filter === "all" ||
+      (filter === "missing" && status === "missing") ||
+      (filter === "have" && status === "duplicate");
 
     sticker.style.display = show ? "flex" : "none";
   });
@@ -37,7 +58,12 @@ function applyCurrentFilter() {
   updateSections();
 }
 
-stickers.forEach((sticker) => {
+function setSummary(field, value) {
+  const el = document.querySelector(`[data-field="${field}"]`);
+  if (el) el.textContent = value;
+}
+
+getStickers().forEach((sticker) => {
   sticker.addEventListener("click", async () => {
     try {
       const response = await fetch(`/${sticker.dataset.id}`, {
@@ -48,11 +74,10 @@ stickers.forEach((sticker) => {
 
       if (!data.success) return;
 
-      sticker.className = `sticker ${data.status} ${
-        sticker.classList.contains("special") ? "special" : ""
-      }`;
-
       sticker.dataset.status = data.status;
+
+      sticker.classList.remove("missing", "owned", "duplicate");
+      sticker.classList.add(data.status);
 
       updateCounters();
       applyCurrentFilter();

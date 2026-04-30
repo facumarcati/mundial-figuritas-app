@@ -19,6 +19,17 @@ const stickers = [
   "MEX7",
   "MEX8",
   "MEX9",
+  "MEX10",
+  "MEX11",
+  "MEX12",
+  "MEX13",
+  "MEX14",
+  "MEX15",
+  "MEX16",
+  "MEX17",
+  "MEX18",
+  "MEX19",
+  "MEX20",
 ];
 
 export default stickers;

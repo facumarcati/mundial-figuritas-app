@@ -5,37 +5,65 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
+
   <body>
     <div class="container">
       <h1>Figuritas</h1>
 
+      <!-- FILTROS -->
       <div class="toolbar">
-        <button class="btn active" data-filter="all">All</button>
-        <button class="btn" data-filter="missing">Need</button>
-        <button class="btn" data-filter="duplicate">Swaps</button>
+        <button class="btn active" data-filter="all">Todas</button>
+        <button class="btn" data-filter="missing">Faltan</button>
+        <button class="btn" data-filter="have">Repetidas</button>
       </div>
 
-      <div class="stats">
-        <span class="stat-total">Total: {{totalCount}}</span>
-        <span class="stat-owned">Tengo: {{ownedCount}}</span>
-        <span class="stat-dup">Repetidas: {{dupCount}}</span>
+      <!-- SUMMARY -->
+      <div class="summary">
+        <h2>Resumen</h2>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <span class="label">Completado</span>
+            <span class="value" data-field="completion">{{completion}}%</span>
+          </div>
+
+          <div class="summary-card">
+            <span class="label">Total</span>
+            <span class="value" data-field="total">{{totalCount}}</span>
+          </div>
+
+          <div class="summary-card">
+            <span class="label">Me faltan</span>
+            <span class="value" data-field="missing">{{missingCount}}</span>
+          </div>
+
+          <div class="summary-card">
+            <span class="label">Tengo</span>
+            <span class="value" data-field="owned">{{ownedCount}}</span>
+          </div>
+
+          <div class="summary-card">
+            <span class="label">Repetidas</span>
+            <span class="value" data-field="duplicate">{{dupCount}}</span>
+          </div>
+        </div>
       </div>
 
+      <!-- ALBUM -->
       {{#each groupedStickers}}
         <section class="album-section">
-            <h2 class="section-title">{{name}}</h2>
-
-            <div class="stickers-grid">
+          <h2 class="section-title">{{name}}</h2>
+          <div class="stickers-grid">
             {{#each stickers}}
-                <div
+              <div
                 class="sticker {{status}} {{#if (isSpecial code)}}special{{/if}}"
                 data-id="{{_id}}"
                 data-status="{{status}}"
-                >
+              >
                 {{code}}
-                </div>
+              </div>
             {{/each}}
-            </div>
+          </div>
         </section>
       {{/each}}
     </div>
