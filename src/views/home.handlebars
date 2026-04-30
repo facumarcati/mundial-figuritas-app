@@ -1,0 +1,45 @@
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Figuritas</h1>
+
+      <div class="toolbar">
+        <button class="btn active" data-filter="all">All</button>
+        <button class="btn" data-filter="missing">Need</button>
+        <button class="btn" data-filter="duplicate">Swaps</button>
+      </div>
+
+      <div class="stats">
+        <span class="stat-total">Total: {{totalCount}}</span>
+        <span class="stat-owned">Tengo: {{ownedCount}}</span>
+        <span class="stat-dup">Repetidas: {{dupCount}}</span>
+      </div>
+
+      {{#each groupedStickers}}
+        <section class="album-section">
+            <h2 class="section-title">{{name}}</h2>
+
+            <div class="stickers-grid">
+            {{#each stickers}}
+                <div
+                class="sticker {{status}} {{#if (isSpecial code)}}special{{/if}}"
+                data-id="{{_id}}"
+                data-status="{{status}}"
+                >
+                {{code}}
+                </div>
+            {{/each}}
+            </div>
+        </section>
+      {{/each}}
+    </div>
+
+    <script src="/js/app.js"></script>
+  </body>
+</html>
