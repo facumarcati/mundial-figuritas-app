@@ -30,6 +30,28 @@
   --accent: #1a1a1a;
 }
 
+[data-theme="dark"] {
+  --bg: #111111;
+  --bg-surface: #1a1a1a;
+  --border: #3a3a3a;
+
+  --owned-bg: #f7f7f7;
+  --owned-txt: #111111;
+
+  --missing-bg: #1a1a1a;
+  --missing-brd: #2e2e2e;
+  --missing-txt: #f7f7f7;
+
+  --text-main: #f7f7f7;
+  --text-muted: #666666;
+  --accent: #f7f7f7;
+}
+
+[data-theme="dark"] .sticker.owned,
+[data-theme="dark"] .sticker.duplicate {
+  border-color: var(--gold-light);
+}
+
 body {
   background-color: var(--bg);
   color: var(--text-main);
@@ -39,6 +61,20 @@ body {
   padding: 24px 20px 60px;
 }
 
+body,
+.sticker,
+.summary-card,
+.countries-nav,
+.country-chip,
+.packs-section details,
+.toolbar,
+.theme-toggle {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -46,6 +82,31 @@ html {
 .container {
   max-width: 700px;
   margin: 0 auto;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header-row h1 {
+  margin-bottom: 0;
+}
+
+.theme-toggle {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--gold);
 }
 
 /* ── Header ── */
@@ -130,7 +191,7 @@ h1 {
 }
 
 .summary-card {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 14px;
   display: flex;
@@ -141,7 +202,7 @@ h1 {
 
 .summary-card .label {
   font-size: 12px;
-  color: #777;
+  color: var(--text-muted);
 }
 
 .summary-card .value {
@@ -196,6 +257,130 @@ h1 {
   border-color: var(--gold);
 }
 
+/* ── Packs ── */
+.packs-section {
+  margin-bottom: 20px;
+}
+
+.packs-section details {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.packs-section summary.packs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.packs-section summary.packs-header::-webkit-details-marker {
+  display: none;
+}
+
+.packs-section summary.packs-header span:last-child {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.packs-body {
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tabla */
+.packs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.packs-table th {
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.packs-table td {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.packs-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Formulario */
+.packs-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.packs-form input {
+  flex: 1;
+  min-width: 80px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-main);
+  outline: none;
+}
+
+.packs-form input:focus {
+  border-color: var(--gold);
+}
+
+.packs-form input,
+.packs-form select {
+  flex: 1;
+  min-width: 80px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-main);
+  outline: none;
+}
+
+.packs-form input:focus,
+.packs-form select:focus {
+  border-color: var(--gold);
+}
+
+.packs-form button {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 7px 16px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.packs-form button:hover {
+  opacity: 0.85;
+}
+
 .section-title {
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
@@ -245,7 +430,7 @@ h1 {
 }
 
 .sticker.missing:not(.special) {
-  border-color: #cfcfcf;
+  border-color: var(--border);
 }
 
 .sticker.missing.captain {
@@ -270,7 +455,7 @@ h1 {
 /* Duplicate — igual que owned pero con badge rojo */
 .sticker.duplicate {
   background: var(--owned-bg);
-  border: 2.5px solid var(--gold);
+  border: 2px solid var(--gold);
   color: var(--owned-txt);
 }
 
@@ -317,7 +502,7 @@ h1 {
   height: 42px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
   border: none;
   font-size: 1.1rem;
   cursor: pointer;

@@ -8,9 +8,11 @@
 
   <body>
     <div class="container">
-      <h1>Figuritas Mundial 2026</h1>
+      <div class="header-row">
+        <h1>Figuritas Mundial 2026</h1>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+      </div>
 
-      <!-- FILTROS -->
       <div class="toolbar">
         <button class="btn active" data-filter="all">Todas</button>
         <button class="btn" data-filter="missing">Faltan</button>
@@ -23,31 +25,61 @@
         {{/each}}
       </div>
 
-      <!-- SUMMARY -->
+      <section class="packs-section">
+        <details>
+          <summary class="packs-header">
+            <span>Sobres</span>
+            <span>{{totalPacks}} sobres · {{totalStickersOpened}} figuritas</span>
+          </summary>
+
+          <div class="packs-body">
+            <table class="packs-table">
+              <thead>
+                <tr><th>Cantidad</th><th>Tipo</th><th>Fecha</th></tr>
+              </thead>
+              <tbody>
+                {{#each packs}}
+                  <tr>
+                    <td>{{quantity}}</td>
+                    <td>{{type}}</td>
+                    <td>{{formatDate date}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+
+            <form class="packs-form" action="/packs" method="POST">
+              <input type="number" name="quantity" placeholder="Cantidad" min="1" required />
+              <select name="type">
+                <option value="normal">Normal</option>
+                <option value="MC">McDonald's</option>
+              </select>
+              <input type="date" name="date" required />
+              <button type="submit">Agregar</button>
+            </form>
+          </div>
+        </details>
+      </section>
+
       <div class="summary">
         <h2>Resumen</h2>
-
         <div class="summary-grid">
           <div class="summary-card">
             <span class="label">Completado</span>
             <span class="value" data-field="completion">{{completion}}%</span>
           </div>
-
           <div class="summary-card">
             <span class="label">Total</span>
             <span class="value" data-field="total">{{totalCount}}</span>
           </div>
-
           <div class="summary-card">
             <span class="label">Me faltan</span>
             <span class="value" data-field="missing">{{missingCount}}</span>
           </div>
-
           <div class="summary-card">
             <span class="label">Tengo</span>
             <span class="value" data-field="owned">{{ownedCount}}</span>
           </div>
-
           <div class="summary-card">
             <span class="label">Repetidas</span>
             <span class="value" data-field="duplicate">{{dupCount}}</span>
@@ -55,7 +87,6 @@
         </div>
       </div>
 
-      <!-- ALBUM -->
       {{#each groupedStickers}}
         <section class="album-section" id="section-{{@key}}">
           <h2 class="section-title">{{name}}</h2>

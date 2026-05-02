@@ -45,6 +45,13 @@ app.engine(
       },
       isSpecial: (code) => code?.startsWith("FWC"),
       isFirst: (code) => /[A-Z]+1$/.test(code),
+      formatDate: (date) => {
+        const d = new Date(date);
+        const day = d.getUTCDate();
+        const month = d.getUTCMonth() + 1;
+        const year = d.getUTCFullYear();
+        return `${day}/${month}/${year}`;
+      },
     },
   }),
 );

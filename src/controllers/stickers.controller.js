@@ -1,6 +1,7 @@
 import { teamOrder } from "../data/stickers.js";
 
 import Sticker from "../models/sticker.model.js";
+import Pack from "../models/pack.model.js";
 
 export const getAllStickers = async (req, res) => {
   try {
@@ -63,6 +64,14 @@ export const toggleStickerStatus = async (req, res) => {
 export const getHome = async (req, res) => {
   try {
     const stickers = await Sticker.find().lean();
+    const packs = await Pack.find().sort({ date: 1 }).lean();
+
+    const totalPacks = packs.reduce((sum, p) => sum + p.quantity, 0);
+
+    const totalStickersOpened = packs.reduce((sum, p) => {
+      const perPack = p.type === "MC" ? 5 : 7;
+      return sum + p.quantity * perPack;
+    }, 0);
 
     const orderMap = new Map(
       teamOrder.flatMap((team, teamIndex) =>
@@ -134,11 +143,24 @@ export const getHome = async (req, res) => {
       dupCount,
       missingCount,
       completion,
+      packs,
+      totalPacks,
+      totalStickersOpened,
     });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error al cargar el álbum");
   }
+};
+
+export const addPack = async (req, res) => {
+  const { quantity, type, date } = req.body;
+
+  const [year, month, day] = date.split("-").map(Number);
+  const localDate = new Date(year, month - 1, day);
+
+  await Pack.create({ quantity, type, date: localDate });
+  res.redirect("/");
 };
 
 const sectionNames = {
