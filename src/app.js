@@ -43,9 +43,8 @@ app.engine(
       endsWith: (text, suffix) => {
         return text?.endsWith(suffix);
       },
-      isSpecial: (code) => {
-        return code?.endsWith("0") || code?.startsWith("FWC");
-      },
+      isSpecial: (code) => code?.startsWith("FWC"),
+      isFirst: (code) => /[A-Z]+1$/.test(code),
     },
   }),
 );

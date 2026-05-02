@@ -19,7 +19,7 @@
 
 // export default seedStickers;
 
-// USAR CUANDO SE AGREGAN NUEVAS FIGURITAS
+// USAR CODIGO DE ARRIBA CUANDO SE AGREGAN NUEVAS FIGURITAS
 
 import Sticker from "../models/sticker.model.js";
 import stickers from "../data/stickers.js";

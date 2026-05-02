@@ -65,8 +65,11 @@ export const getHome = async (req, res) => {
     const stickers = await Sticker.find().lean();
 
     const orderMap = new Map(
-      teamOrder.flatMap((team) =>
-        Array.from({ length: 20 }, (_, i) => [`${team}${i + 1}`, i]),
+      teamOrder.flatMap((team, teamIndex) =>
+        Array.from({ length: 20 }, (_, i) => [
+          `${team}${i + 1}`,
+          teamIndex * 20 + i,
+        ]),
       ),
     );
 

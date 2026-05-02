@@ -1,57 +1,57 @@
 export const teamOrder = [
   // Grupo 1
   "MEX",
-  "KOR",
   "RSA",
+  "KOR",
   "CZE",
 
   // Grupo 2
   "CAN",
-  "SUI",
-  "QAT",
   "BIH",
+  "QAT",
+  "SUI",
 
   // Grupo 3
   "BRA",
   "MAR",
-  "SCO",
   "HAI",
+  "SCO",
 
   // Grupo 4
   "USA",
-  "AUS",
   "PAR",
+  "AUS",
   "TUR",
 
   // Grupo 5
   "GER",
-  "ECU",
-  "CIV",
   "CUW",
+  "CIV",
+  "ECU",
 
   // Grupo 6
   "NED",
   "JPN",
-  "TUN",
   "SWE",
+  "TUN",
 
   // Grupo 7
   "BEL",
-  "IRN",
   "EGY",
+  "IRN",
   "NZL",
 
   // Grupo 8
+  "ESP",
   "CPV",
   "KSA",
-  "ESP",
   "URU",
 
   // Grupo 9
   "FRA",
   "SEN",
-  "NOR",
   "IRQ",
+  "NOR",
 
   // Grupo 10
   "ARG",
@@ -61,20 +61,20 @@ export const teamOrder = [
 
   // Grupo 11
   "POR",
-  "COL",
-  "UZB",
   "COD",
+  "UZB",
+  "COL",
 
   // Grupo 12
   "ENG",
   "CRO",
-  "PAN",
   "GHA",
+  "PAN",
 ];
 
 // especiales primero
 const specialStickers = [
-  ...Array.from({ length: 10 }, (_, i) => `FWC${String(i).padStart(2, "0")}`),
+  ...Array.from({ length: 20 }, (_, i) => `FWC${String(i).padStart(2, "0")}`),
 ];
 
 // equipos ordenados por grupo
