@@ -436,9 +436,7 @@ h1 {
 
 .section-title {
   margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 3px solid var(--gold);
-  color: var(--gold);
+  color: var(--accent);
   font-size: 1.5rem;
 }
 
@@ -469,9 +467,13 @@ h1 {
 
 /* Missing — círculo hueco con borde dorado */
 .sticker.missing {
-  background: var(--missing-bg);
-  border: 2.5px solid var(--missing-brd);
-  color: var(--missing-txt);
+  background: #d1d1d1;
+  border: none;
+  color: #888888;
+}
+
+.sticker.missing:not(.special):not(.captain) {
+  border: none;
 }
 
 .sticker.missing:hover {
@@ -487,7 +489,9 @@ h1 {
 }
 
 .sticker.missing.captain {
-  border-color: var(--gold);
+  background: #f5e9c4;
+  border: none;
+  color: #c9a227;
 }
 
 .sticker.missing.captain:hover {
@@ -496,9 +500,10 @@ h1 {
 
 /* Owned — círculo relleno oscuro con borde dorado */
 .sticker.owned {
-  background: var(--owned-bg);
-  border: 2.5px solid var(--gold);
-  color: var(--owned-txt);
+  background: #4b5563;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: line-through;
 }
 
 .sticker.owned:hover {
@@ -507,32 +512,27 @@ h1 {
 
 /* Duplicate — igual que owned pero con badge rojo */
 .sticker.duplicate {
-  background: var(--owned-bg);
-  border: 2px solid var(--gold);
-  color: var(--owned-txt);
+  background: #4b5563;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: line-through;
 }
 
 .sticker.duplicate:hover {
   box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.25);
 }
 
-/* Badge "+" rojo */
 .sticker.duplicate::after {
-  content: "+";
+  content: "";
   position: absolute;
-  top: -4px;
-  right: -4px;
-  width: 18px;
-  height: 18px;
-  background: var(--badge);
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  top: 3px;
+  right: 3px;
+  background: #3b82f6;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--bg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 2;
 }
 
 /* ── Scrollbar ── */

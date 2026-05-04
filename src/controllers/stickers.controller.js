@@ -111,6 +111,7 @@ export const getHome = async (req, res) => {
       if (!groups[prefix]) {
         groups[prefix] = {
           name: sectionNames[prefix] || prefix,
+          code: prefix,
           stickers: [],
         };
       }
