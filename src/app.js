@@ -52,6 +52,22 @@ app.engine(
         const year = d.getUTCFullYear();
         return `${day}/${month}/${year}`;
       },
+      pricePerPack: (amount, quantity) => {
+        if (!amount || !quantity) return "-";
+        const value = amount / quantity;
+        return (
+          "$" +
+          value.toLocaleString("es-AR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
+      },
+      formatAmount: (amount) => {
+        if (!amount) return "-";
+        return "$" + Number(amount).toLocaleString("es-AR");
+      },
+      isoDate: (date) => new Date(date).toISOString().split("T")[0],
     },
   }),
 );

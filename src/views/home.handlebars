@@ -26,39 +26,74 @@
       </div>
 
       <section class="packs-section">
-        <details>
-          <summary class="packs-header">
+        <div class="packs-card">
+          <div class="packs-header" id="packsToggle">
             <span>Sobres</span>
             <span>{{totalPacks}} sobres · {{totalStickersOpened}} figuritas</span>
-          </summary>
-
-          <div class="packs-body">
-            <table class="packs-table">
-              <thead>
-                <tr><th>Cantidad</th><th>Tipo</th><th>Fecha</th></tr>
-              </thead>
-              <tbody>
-                {{#each packs}}
-                  <tr>
-                    <td>{{quantity}}</td>
-                    <td>{{type}}</td>
-                    <td>{{formatDate date}}</td>
-                  </tr>
-                {{/each}}
-              </tbody>
-            </table>
-
-            <form class="packs-form" action="/packs" method="POST">
-              <input type="number" name="quantity" placeholder="Cantidad" min="1" required />
-              <select name="type">
-                <option value="normal">Normal</option>
-                <option value="MC">McDonald's</option>
-              </select>
-              <input type="date" name="date" required />
-              <button type="submit">Agregar</button>
-            </form>
           </div>
-        </details>
+
+          <div class="packs-body" id="packsBody">
+            <div class="packs-body-inner">
+              <table class="packs-table">
+                <thead>
+                  <tr>
+                    <th>Cantidad</th>
+                    <th>Tipo</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>$/sobre</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each packs}}
+                    <tr id="row-{{_id}}">
+                      <!-- Vista -->
+                      <td class="view-mode">{{quantity}}</td>
+                      <td class="view-mode">{{type}}</td>
+                      <td class="view-mode">{{formatDate date}}</td>
+                      <td class="view-mode">{{formatAmount amount}}</td>
+                      <td class="view-mode">{{pricePerPack amount quantity}}</td>
+                      <td class="view-mode actions-cell">
+                        <button class="pack-btn edit-btn" onclick="editRow('{{_id}}')">✏️</button>
+                        <form action="/packs/{{_id}}/delete" method="POST" style="display:inline">
+                          <button class="pack-btn delete-btn" type="submit">🗑️</button>
+                        </form>
+                      </td>
+
+                      <!-- Edición (oculta por defecto) -->
+                      <td class="edit-mode" style="display:none" colspan="6">
+                        <form class="packs-form inline-edit" action="/packs/{{_id}}/update" method="POST">
+                          <input type="number" name="quantity" value="{{quantity}}" min="1" required />
+                          <select name="type">
+                            <option value="normal" {{#if (eq type "normal")}}selected{{/if}}>Normal</option>
+                            <option value="MC" {{#if (eq type "MC")}}selected{{/if}}>McDonald's</option>
+                          </select>
+                          <input type="date" name="date" value="{{isoDate date}}" required />
+                          <input type="number" name="amount" value="{{amount}}" placeholder="Monto" min="0" step="0.01" />
+                          <button type="submit">✓</button>
+                          <button type="button" onclick="cancelEdit('{{_id}}')">✕</button>
+                        </form>
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+
+              <!-- Formulario agregar -->
+              <form class="packs-form" action="/packs" method="POST">
+                <input type="number" name="quantity" placeholder="Cantidad" min="1" required />
+                <select name="type">
+                  <option value="normal">Normal</option>
+                  <option value="MC">McDonald's</option>
+                </select>
+                <input type="date" name="date" required />
+                <input type="number" name="amount" placeholder="Monto" min="0" step="0.01" />
+                <button type="submit">Agregar</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </section>
 
       <div class="summary">

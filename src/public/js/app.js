@@ -119,5 +119,27 @@ themeToggle.addEventListener("click", () => {
   themeToggle.textContent = next === "dark" ? "☀️" : "🌙";
 });
 
+function editRow(id) {
+  const row = document.getElementById(`row-${id}`);
+  row
+    .querySelectorAll(".view-mode")
+    .forEach((td) => (td.style.display = "none"));
+  row.querySelector(".edit-mode").style.display = "";
+}
+
+function cancelEdit(id) {
+  const row = document.getElementById(`row-${id}`);
+  row.querySelectorAll(".view-mode").forEach((td) => (td.style.display = ""));
+  row.querySelector(".edit-mode").style.display = "none";
+}
+
+const packsToggle = document.getElementById("packsToggle");
+const packsBody = document.getElementById("packsBody");
+
+packsToggle.addEventListener("click", () => {
+  packsBody.classList.toggle("open");
+  packsToggle.closest(".packs-card").classList.toggle("open");
+});
+
 updateCounters();
 applyCurrentFilter();

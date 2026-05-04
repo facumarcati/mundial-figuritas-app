@@ -154,12 +154,35 @@ export const getHome = async (req, res) => {
 };
 
 export const addPack = async (req, res) => {
-  const { quantity, type, date } = req.body;
+  const { quantity, type, date, amount } = req.body;
 
   const [year, month, day] = date.split("-").map(Number);
   const localDate = new Date(year, month - 1, day);
 
-  await Pack.create({ quantity, type, date: localDate });
+  await Pack.create({ quantity, type, date: localDate, amount: amount || 0 });
+
+  res.redirect("/");
+};
+
+export const updatePack = async (req, res) => {
+  const { quantity, type, date, amount } = req.body;
+
+  const [year, month, day] = date.split("-").map(Number);
+  const localDate = new Date(year, month - 1, day);
+
+  await Pack.findByIdAndUpdate(req.params.id, {
+    quantity,
+    type,
+    date: localDate,
+    amount: amount || 0,
+  });
+
+  res.redirect("/");
+};
+
+export const deletePack = async (req, res) => {
+  await Pack.findByIdAndDelete(req.params.id);
+
   res.redirect("/");
 };
 
