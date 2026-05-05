@@ -41,27 +41,25 @@
                     <th>Tipo</th>
                     <th>Fecha</th>
                     <th>Monto</th>
-                    <th>$/sobre</th>
+                    <th>$/Sobre</th>
                     <th>Acción</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#each packs}}
                     <tr id="row-{{_id}}">
-                      <!-- Vista -->
                       <td class="view-mode">{{quantity}}</td>
                       <td class="view-mode">{{type}}</td>
                       <td class="view-mode">{{formatDate date}}</td>
                       <td class="view-mode">{{formatAmount amount}}</td>
                       <td class="view-mode">{{pricePerPack amount quantity}}</td>
                       <td class="view-mode actions-cell">
-                        <button class="pack-btn edit-btn" onclick="editRow('{{_id}}')">✏️</button>
+                        <button class="pack-btn edit-btn" onclick="editRow('{{_id}}')"><i class="fa-solid fa-pencil"></i></button>
                         <form action="/packs/{{_id}}/delete" method="POST" style="display:inline">
-                          <button class="pack-btn delete-btn" type="submit">🗑️</button>
+                          <button class="pack-btn delete-btn" type="submit"><i class="fa-solid fa-trash"></i></button>
                         </form>
                       </td>
 
-                      <!-- Edición (oculta por defecto) -->
                       <td class="edit-mode" style="display:none" colspan="6">
                         <form class="packs-form inline-edit" action="/packs/{{_id}}/update" method="POST">
                           <input type="number" name="quantity" value="{{quantity}}" min="1" required />
@@ -80,7 +78,6 @@
                 </tbody>
               </table>
 
-              <!-- Formulario agregar -->
               <form class="packs-form" action="/packs" method="POST">
                 <input type="number" name="quantity" placeholder="Cantidad" min="1" required />
                 <select name="type">
@@ -124,7 +121,7 @@
 
       {{#each groupedStickers}}
         <section class="album-section" id="section-{{@key}}">
-          <h2 class="section-title">{{code}} - {{name}}</h2>
+          <h2 class="section-title">{{code}} - {{name}} {{#if flag}}{{flag}} {{/if}}</h2>
           <div class="stickers-grid">
             {{#each stickers}}
               <div
@@ -142,6 +139,7 @@
 
     <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">↑</button>
 
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
     <script src="/js/app.js"></script>
   </body>
 </html>

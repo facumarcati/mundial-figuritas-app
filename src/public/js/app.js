@@ -141,5 +141,11 @@ packsToggle.addEventListener("click", () => {
   packsToggle.closest(".packs-card").classList.toggle("open");
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.twemoji) {
+    twemoji.parse(document.body);
+  }
+});
+
 updateCounters();
 applyCurrentFilter();

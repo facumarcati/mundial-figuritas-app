@@ -112,6 +112,7 @@ export const getHome = async (req, res) => {
         groups[prefix] = {
           name: sectionNames[prefix] || prefix,
           code: prefix,
+          flag: countryFlags[prefix] || "",
           stickers: [],
         };
       }
@@ -188,7 +189,7 @@ export const deletePack = async (req, res) => {
 };
 
 const sectionNames = {
-  FWC: "Especiales 🏆",
+  FWC: "Especiales",
 
   // CONCACAF
   USA: "Estados Unidos",
@@ -249,4 +250,68 @@ const sectionNames = {
 
   // OFC
   NZL: "Nueva Zelanda",
+};
+
+const countryFlags = {
+  FWC: "🏆",
+
+  // CONCACAF
+  USA: "🇺🇸",
+  MEX: "🇲🇽",
+  CAN: "🇨🇦",
+  PAN: "🇵🇦",
+  HAI: "🇭🇹",
+  CUW: "🇨🇼",
+
+  // CONMEBOL
+  ARG: "🇦🇷",
+  BRA: "🇧🇷",
+  URU: "🇺🇾",
+  COL: "🇨🇴",
+  ECU: "🇪🇨",
+  PAR: "🇵🇾",
+
+  // UEFA
+  ENG: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+  FRA: "🇫🇷",
+  ESP: "🇪🇸",
+  GER: "🇩🇪",
+  NED: "🇳🇱",
+  POR: "🇵🇹",
+  BEL: "🇧🇪",
+  CRO: "🇭🇷",
+  SUI: "🇨🇭",
+  AUT: "🇦🇹",
+  NOR: "🇳🇴",
+  SCO: "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+  SWE: "🇸🇪",
+  TUR: "🇹🇷",
+  BIH: "🇧🇦",
+  CZE: "🇨🇿",
+
+  // CAF
+  MAR: "🇲🇦",
+  SEN: "🇸🇳",
+  EGY: "🇪🇬",
+  ALG: "🇩🇿",
+  GHA: "🇬🇭",
+  CIV: "🇨🇮",
+  TUN: "🇹🇳",
+  RSA: "🇿🇦",
+  CPV: "🇨🇻",
+  COD: "🇨🇩",
+
+  // AFC
+  JPN: "🇯🇵",
+  KOR: "🇰🇷",
+  IRN: "🇮🇷",
+  AUS: "🇦🇺",
+  KSA: "🇸🇦",
+  QAT: "🇶🇦",
+  UZB: "🇺🇿",
+  JOR: "🇯🇴",
+  IRQ: "🇮🇶",
+
+  // OFC
+  NZL: "🇳🇿",
 };

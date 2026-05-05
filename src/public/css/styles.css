@@ -59,6 +59,7 @@ body {
   font-size: 15px;
   min-height: 100vh;
   padding: 24px 20px 60px;
+  font-family: "Inter", "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
 }
 
 body,
@@ -176,7 +177,7 @@ h1 {
 }
 
 .summary {
-  margin: 20px 0;
+  margin: 20px 0 40px 0;
 }
 
 .summary h2 {
@@ -331,6 +332,8 @@ h1 {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
+  background: var(--bg-surface);
+  color: var(--text-main);
 }
 
 .packs-table th {
@@ -346,8 +349,21 @@ h1 {
   border-bottom: 1px solid var(--border);
 }
 
+.packs-table tr {
+  background: var(--bg-surface);
+}
+
+.packs-table tr:nth-child(even) {
+  background: var(--bg);
+}
+
 .packs-table tr:last-child td {
   border-bottom: none;
+}
+
+.packs-table td,
+.packs-table th {
+  color: var(--text-main);
 }
 
 /* Formulario */
@@ -364,10 +380,10 @@ h1 {
   font-family: "Inter", sans-serif;
   font-size: 0.85rem;
   padding: 7px 10px;
-  border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg);
   color: var(--text-main);
+  border: 1px solid var(--border);
   outline: none;
 }
 
@@ -400,7 +416,7 @@ h1 {
   font-weight: 600;
   padding: 7px 16px;
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -570,6 +586,17 @@ h1 {
 .scroll-top.visible {
   opacity: 1;
   visibility: visible;
+}
+
+.emoji {
+  margin-left: 4px;
+  width: 28px;
+  height: 28px;
+  vertical-align: top;
+}
+
+.pack-btn i {
+  font-size: 1.2rem;
 }
 
 /* ── Responsive ── */
