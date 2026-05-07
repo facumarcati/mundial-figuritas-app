@@ -73,6 +73,10 @@ export const getHome = async (req, res) => {
       return sum + p.quantity * perPack;
     }, 0);
 
+    const totalSpent = packs.reduce((sum, p) => {
+      return sum + (p.amount || 0);
+    }, 0);
+
     const orderMap = new Map(
       teamOrder.flatMap((team, teamIndex) =>
         Array.from({ length: 20 }, (_, i) => [
@@ -148,6 +152,7 @@ export const getHome = async (req, res) => {
       packs,
       totalPacks,
       totalStickersOpened,
+      totalSpent,
     });
   } catch (error) {
     console.error(error);

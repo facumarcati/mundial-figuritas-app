@@ -25,6 +25,7 @@
 
   --badge: #e53935;
 
+  --text-color: #111;
   --text-main: #111111;
   --text-muted: #888888;
   --accent: #1a1a1a;
@@ -42,6 +43,7 @@
   --missing-brd: #2e2e2e;
   --missing-txt: #f7f7f7;
 
+  --text-color: #fff;
   --text-main: #f7f7f7;
   --text-muted: #666666;
   --accent: #f7f7f7;
@@ -439,11 +441,34 @@ h1 {
   font-size: 0.9rem;
   padding: 2px 4px;
   border-radius: 4px;
+  color: var(--text-color); /* importante */
   transition: background 0.15s;
 }
 
 .pack-btn:hover {
   background: var(--border);
+}
+
+.pack-btn i {
+  font-size: 1.2rem;
+}
+
+/* EDITAR */
+.edit-btn {
+  color: var(--gold-light);
+}
+
+.edit-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+}
+
+/* ELIMINAR */
+.delete-btn {
+  color: #ef4444;
+}
+
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
 }
 
 .inline-edit {
@@ -593,10 +618,6 @@ h1 {
   width: 28px;
   height: 28px;
   vertical-align: top;
-}
-
-.pack-btn i {
-  font-size: 1.2rem;
 }
 
 /* ── Responsive ── */

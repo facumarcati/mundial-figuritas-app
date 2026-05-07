@@ -63,6 +63,10 @@ app.engine(
           })
         );
       },
+      formatNumber: (amount) => {
+        if (!amount) return "-";
+        return Number(amount).toLocaleString("es-AR");
+      },
       formatAmount: (amount) => {
         if (!amount) return "-";
         return "$" + Number(amount).toLocaleString("es-AR");
