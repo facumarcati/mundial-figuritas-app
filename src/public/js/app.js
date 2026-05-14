@@ -182,5 +182,89 @@ copyMissingBtn?.addEventListener("click", async () => {
   }
 });
 
+const copyDuplicateBtn = document.getElementById("copyDuplicateBtn");
+
+copyDuplicateBtn?.addEventListener("click", async () => {
+  const sections = document.querySelectorAll(".album-section");
+
+  let text = "";
+
+  sections.forEach((section) => {
+    const sectionName = section.dataset.name;
+
+    const duplicates = [
+      ...section.querySelectorAll(".sticker[data-status='duplicate']"),
+    ];
+
+    if (!duplicates.length) return;
+
+    const codes = duplicates.map((s) => s.textContent.trim());
+
+    text += `${sectionName}\n`;
+    text += `${codes.join(", ")}\n`;
+  });
+
+  try {
+    await navigator.clipboard.writeText(text.trim());
+
+    copyDuplicateBtn.textContent = "¡Copiado!";
+
+    setTimeout(() => {
+      copyDuplicateBtn.textContent = "Copiar repetidas";
+    }, 500);
+  } catch (error) {
+    console.error("Error al copiar:", error);
+  }
+});
+
+const copyTradeBtn = document.getElementById("copyTradeBtn");
+
+copyTradeBtn?.addEventListener("click", async () => {
+  const sections = document.querySelectorAll(".album-section");
+
+  let missingText = "📕 FALTANTES\n";
+  let duplicateText = "\n📗 REPETIDAS\n";
+
+  sections.forEach((section) => {
+    const sectionName = section.dataset.name;
+
+    const missing = [
+      ...section.querySelectorAll(".sticker[data-status='missing']"),
+    ];
+
+    const duplicates = [
+      ...section.querySelectorAll(".sticker[data-status='duplicate']"),
+    ];
+
+    if (missing.length) {
+      const codes = missing.map((s) => s.textContent.trim());
+
+      missingText += `${sectionName}\n`;
+      missingText += `${codes.join(", ")}\n`;
+    }
+
+    if (duplicates.length) {
+      const codes = duplicates.map((s) => s.textContent.trim());
+
+      duplicateText += `${sectionName}\n`;
+      duplicateText += `${codes.join(", ")}\n`;
+    }
+  });
+
+  const finalText = `${missingText}${duplicateText}`.trim();
+
+  try {
+    await navigator.clipboard.writeText(finalText);
+
+    copyTradeBtn.textContent = "¡Copiado!";
+
+    setTimeout(() => {
+      copyTradeBtn.textContent = "Copiar intercambio";
+    }, 500);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 updateCounters();
 applyCurrentFilter();

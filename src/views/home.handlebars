@@ -19,9 +19,17 @@
         <button class="btn" data-filter="have">Repetidas</button>
       </div>
 
-      <button class="copy-btn" id="copyMissingBtn">
-        Copiar faltantes
-      </button>
+      <div class="extra-actions">
+        <button id="copyMissingBtn" class="copy-btn">
+          Copiar faltantes
+        </button>
+        <button id="copyDuplicateBtn" class="copy-btn">
+          Copiar repetidas
+        </button>
+        <button class="copy-btn" id="copyTradeBtn">
+          Copiar faltantes y repetidas
+        </button>
+      </div>
 
       <div class="countries-nav">
         {{#each groupedStickers}}
