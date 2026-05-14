@@ -93,16 +93,13 @@ export const getHome = async (req, res) => {
       const aSpecial = isSpecial(a.code);
       const bSpecial = isSpecial(b.code);
 
-      // 1. especiales primero
       if (aSpecial && !bSpecial) return -1;
       if (!aSpecial && bSpecial) return 1;
 
-      // 2. entre especiales (orden simple)
       if (aSpecial && bSpecial) {
         return a.code.localeCompare(b.code);
       }
 
-      // 3. equipos (orden mundial)
       const aIndex = orderMap.get(a.code) ?? 999999;
       const bIndex = orderMap.get(b.code) ?? 999999;
 

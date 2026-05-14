@@ -441,7 +441,7 @@ h1 {
   font-size: 0.9rem;
   padding: 2px 4px;
   border-radius: 4px;
-  color: var(--text-color); /* importante */
+  color: var(--text-color);
   transition: background 0.15s;
 }
 
@@ -469,6 +469,24 @@ h1 {
 
 .delete-btn:hover {
   background: rgba(239, 68, 68, 0.15);
+}
+
+.copy-btn {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: var(--bg-surface);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.copy-btn:hover {
+  opacity: 0.9;
 }
 
 .inline-edit {

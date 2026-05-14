@@ -19,6 +19,10 @@
         <button class="btn" data-filter="have">Repetidas</button>
       </div>
 
+      <button class="copy-btn" id="copyMissingBtn">
+        Copiar faltantes
+      </button>
+
       <div class="countries-nav">
         {{#each groupedStickers}}
           <a class="country-chip" href="#section-{{@key}}">{{@key}}</a>
@@ -120,7 +124,7 @@
       </div>
 
       {{#each groupedStickers}}
-        <section class="album-section" id="section-{{@key}}">
+        <section class="album-section" id="section-{{@key}}" data-name="{{name}}">
           <h2 class="section-title">{{code}} - {{name}} {{#if flag}}{{flag}} {{/if}}</h2>
           <div class="stickers-grid">
             {{#each stickers}}

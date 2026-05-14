@@ -147,5 +147,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+const copyMissingBtn = document.getElementById("copyMissingBtn");
+
+copyMissingBtn?.addEventListener("click", async () => {
+  const sections = document.querySelectorAll(".album-section");
+
+  let text = "";
+
+  sections.forEach((section) => {
+    const sectionName = section.dataset.name;
+
+    const missing = [
+      ...section.querySelectorAll(".sticker[data-status='missing']"),
+    ];
+
+    if (!missing.length) return;
+
+    const codes = missing.map((s) => s.textContent.trim());
+
+    text += `${sectionName}\n`;
+    text += `${codes.join(", ")}\n`;
+  });
+
+  try {
+    await navigator.clipboard.writeText(text.trim());
+
+    copyMissingBtn.textContent = "¡Copiado!";
+
+    setTimeout(() => {
+      copyMissingBtn.textContent = "Copiar faltantes";
+    }, 500);
+  } catch (error) {
+    console.error("Error al copiar:", error);
+  }
+});
+
 updateCounters();
 applyCurrentFilter();
