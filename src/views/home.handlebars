@@ -132,7 +132,11 @@
       </div>
 
       {{#each groupedStickers}}
-        <section class="album-section" id="section-{{@key}}" data-name="{{name}}">
+        <section
+          class="album-section"
+          id="section-{{@key}}"
+          data-name="{{code}} {{#if flag}}{{flag}}{{else}}📜{{/if}}"
+        >
           <h2 class="section-title">{{code}} - {{name}} {{#if flag}}{{flag}} {{/if}}</h2>
           <div class="stickers-grid">
             {{#each stickers}}

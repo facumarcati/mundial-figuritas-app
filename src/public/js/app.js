@@ -147,32 +147,39 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-const copyMissingBtn = document.getElementById("copyMissingBtn");
-
-copyMissingBtn?.addEventListener("click", async () => {
+function buildStickerText(title, status) {
   const sections = document.querySelectorAll(".album-section");
 
-  let text = "";
+  let text = `${title}\n`;
 
   sections.forEach((section) => {
     const sectionName = section.dataset.name;
 
-    const missing = [
-      ...section.querySelectorAll(".sticker[data-status='missing']"),
+    const stickers = [
+      ...section.querySelectorAll(`.sticker[data-status='${status}']`),
     ];
 
-    if (!missing.length) return;
+    if (!stickers.length) return;
 
-    const codes = missing.map((s) => s.textContent.trim());
+    const codes = stickers.map((s) =>
+      s.textContent.trim().replace(/^[A-Z]+/, ""),
+    );
 
-    text += `${sectionName}\n`;
-    text += `${codes.join(", ")}\n`;
+    text += `${sectionName}: ${codes.join(", ")}\n`;
   });
 
-  try {
-    await navigator.clipboard.writeText(text.trim());
+  return text.trim();
+}
 
-    copyMissingBtn.textContent = "¡Copiado!";
+const copyMissingBtn = document.getElementById("copyMissingBtn");
+
+copyMissingBtn?.addEventListener("click", async () => {
+  const text = buildStickerText("Faltantes", "missing");
+
+  try {
+    await navigator.clipboard.writeText(text);
+
+    copyMissingBtn.textContent = "Copiado!";
 
     setTimeout(() => {
       copyMissingBtn.textContent = "Copiar faltantes";
@@ -185,27 +192,10 @@ copyMissingBtn?.addEventListener("click", async () => {
 const copyDuplicateBtn = document.getElementById("copyDuplicateBtn");
 
 copyDuplicateBtn?.addEventListener("click", async () => {
-  const sections = document.querySelectorAll(".album-section");
-
-  let text = "";
-
-  sections.forEach((section) => {
-    const sectionName = section.dataset.name;
-
-    const duplicates = [
-      ...section.querySelectorAll(".sticker[data-status='duplicate']"),
-    ];
-
-    if (!duplicates.length) return;
-
-    const codes = duplicates.map((s) => s.textContent.trim());
-
-    text += `${sectionName}\n`;
-    text += `${codes.join(", ")}\n`;
-  });
+  const text = buildStickerText("Repetidas", "duplicate");
 
   try {
-    await navigator.clipboard.writeText(text.trim());
+    await navigator.clipboard.writeText(text);
 
     copyDuplicateBtn.textContent = "¡Copiado!";
 
@@ -220,38 +210,10 @@ copyDuplicateBtn?.addEventListener("click", async () => {
 const copyTradeBtn = document.getElementById("copyTradeBtn");
 
 copyTradeBtn?.addEventListener("click", async () => {
-  const sections = document.querySelectorAll(".album-section");
+  const missingText = buildStickerText("📕 FALTANTES", "missing");
+  const duplicateText = buildStickerText("📗 REPETIDAS", "duplicate");
 
-  let missingText = "📕 FALTANTES\n";
-  let duplicateText = "\n📗 REPETIDAS\n";
-
-  sections.forEach((section) => {
-    const sectionName = section.dataset.name;
-
-    const missing = [
-      ...section.querySelectorAll(".sticker[data-status='missing']"),
-    ];
-
-    const duplicates = [
-      ...section.querySelectorAll(".sticker[data-status='duplicate']"),
-    ];
-
-    if (missing.length) {
-      const codes = missing.map((s) => s.textContent.trim());
-
-      missingText += `${sectionName}\n`;
-      missingText += `${codes.join(", ")}\n`;
-    }
-
-    if (duplicates.length) {
-      const codes = duplicates.map((s) => s.textContent.trim());
-
-      duplicateText += `${sectionName}\n`;
-      duplicateText += `${codes.join(", ")}\n`;
-    }
-  });
-
-  const finalText = `${missingText}${duplicateText}`.trim();
+  const finalText = `${missingText}\n\n${duplicateText}`;
 
   try {
     await navigator.clipboard.writeText(finalText);
