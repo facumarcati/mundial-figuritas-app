@@ -134,6 +134,16 @@ export const getHome = async (req, res) => {
       return groups;
     }, {});
 
+    const sections = Object.values(groupedStickers);
+
+    const completedSections = sections.filter((section) => {
+      return section.stickers.every(
+        (s) => s.status === "owned" || s.status === "duplicate",
+      );
+    }).length;
+
+    const totalSections = sections.length;
+
     const ownedCount = stickers.filter(
       (sticker) => sticker.status === "owned",
     ).length;
@@ -162,6 +172,8 @@ export const getHome = async (req, res) => {
       totalPacks,
       totalStickersOpened,
       totalSpent,
+      completedSections,
+      totalSections,
     });
   } catch (error) {
     console.error(error);

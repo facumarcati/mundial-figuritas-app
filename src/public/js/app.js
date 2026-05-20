@@ -31,6 +31,26 @@ function updateCounters() {
   setSummary("completion", `${completion}%`);
 }
 
+function updateSectionSummary() {
+  const sections = document.querySelectorAll(".album-section");
+
+  let completed = 0;
+
+  sections.forEach((section) => {
+    const stickers = [...section.querySelectorAll(".sticker")];
+
+    const isComplete = stickers.every((s) => {
+      return s.dataset.status === "owned" || s.dataset.status === "duplicate";
+    });
+
+    if (isComplete) completed++;
+  });
+
+  const total = sections.length;
+
+  setSummary("sections", `${completed}/${total}`);
+}
+
 function updateSections() {
   document.querySelectorAll(".album-section").forEach((section) => {
     const visible = [...section.querySelectorAll(".sticker")].some(
@@ -82,6 +102,7 @@ getStickers().forEach((sticker) => {
       updateCounters();
       updateSectionCounters();
       applyCurrentFilter();
+      updateSectionSummary();
     } catch (error) {
       console.error(error);
     }
@@ -250,3 +271,4 @@ function updateSectionCounters() {
 updateCounters();
 applyCurrentFilter();
 updateSectionCounters();
+updateSectionSummary();
