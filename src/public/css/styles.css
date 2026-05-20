@@ -229,6 +229,20 @@ h1 {
   margin-bottom: 3rem;
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.section-progress {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
 .countries-nav {
   display: grid;
   grid-template-columns: repeat(13, 1fr);
@@ -500,7 +514,6 @@ h1 {
 }
 
 .section-title {
-  margin-bottom: 1rem;
   color: var(--accent);
   font-size: 1.5rem;
 }

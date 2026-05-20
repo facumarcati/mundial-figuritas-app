@@ -80,6 +80,7 @@ getStickers().forEach((sticker) => {
       sticker.classList.add(data.status);
 
       updateCounters();
+      updateSectionCounters();
       applyCurrentFilter();
     } catch (error) {
       console.error(error);
@@ -228,5 +229,24 @@ copyTradeBtn?.addEventListener("click", async () => {
   }
 });
 
+function updateSectionCounters() {
+  document.querySelectorAll(".album-section").forEach((section) => {
+    const stickers = [...section.querySelectorAll(".sticker")];
+
+    const total = stickers.length;
+
+    const completed = stickers.filter(
+      (s) => s.dataset.status !== "missing",
+    ).length;
+
+    const progress = section.querySelector(".section-progress");
+
+    if (progress) {
+      progress.textContent = `${completed}/${total}`;
+    }
+  });
+}
+
 updateCounters();
 applyCurrentFilter();
+updateSectionCounters();

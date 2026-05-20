@@ -137,7 +137,17 @@
           id="section-{{@key}}"
           data-name="{{code}} {{#if flag}}{{flag}}{{else}}📜{{/if}}"
         >
-          <h2 class="section-title">{{code}} - {{name}} {{#if flag}}{{flag}} {{/if}}</h2>
+          <div class="section-header">
+            <h2 class="section-title">
+              {{code}} - {{name}} {{#if flag}}{{flag}}{{/if}}
+            </h2>
+            <span
+              class="section-progress"
+              data-total="{{total}}"
+            >
+              {{completed}}/{{total}}
+            </span>
+          </div>
           <div class="stickers-grid">
             {{#each stickers}}
               <div

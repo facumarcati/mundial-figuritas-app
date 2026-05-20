@@ -115,10 +115,22 @@ export const getHome = async (req, res) => {
           code: prefix,
           flag: countryFlags[prefix] || "",
           stickers: [],
+          total: 0,
+          completed: 0,
+          missing: 0,
         };
       }
 
       groups[prefix].stickers.push(sticker);
+
+      groups[prefix].total++;
+
+      if (sticker.status === "missing") {
+        groups[prefix].missing++;
+      } else {
+        groups[prefix].completed++;
+      }
+
       return groups;
     }, {});
 
