@@ -10,7 +10,10 @@
     <div class="container">
       <div class="header-row">
         <h1>Figuritas Mundial 2026</h1>
-        <button class="theme-toggle" id="themeToggle">🌙</button>
+         <div class="header-actions">
+          <button class="lock-toggle" id="lockToggle"></button>
+          <button class="theme-toggle" id="themeToggle"></button>
+        </div>
       </div>
 
       <div class="toolbar">
@@ -145,8 +148,13 @@
         >
           <div class="section-header">
             <h2 class="section-title">
-              {{code}} - {{name}} {{#if flag}}{{flag}}{{/if}}
+              {{code}} - {{name}}
+
+              {{#if flag}}
+                <span class="section-flag">{{flag}}</span>
+              {{/if}}
             </h2>
+
             <span
               class="section-progress"
               data-total="{{total}}"
@@ -154,6 +162,7 @@
               {{completed}}/{{total}}
             </span>
           </div>
+
           <div class="stickers-grid">
             {{#each stickers}}
               <div

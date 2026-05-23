@@ -1,4 +1,20 @@
 const btns = document.querySelectorAll(".btn");
+const lockToggle = document.getElementById("lockToggle");
+let isLocked = localStorage.getItem("albumLocked") !== "false";
+
+function updateLockUI() {
+  lockToggle.textContent = isLocked ? "🔒" : "🔓";
+}
+
+updateLockUI();
+
+lockToggle.addEventListener("click", () => {
+  isLocked = !isLocked;
+
+  localStorage.setItem("albumLocked", isLocked);
+
+  updateLockUI();
+});
 
 function getStickers() {
   return Array.from(document.querySelectorAll(".sticker"));
@@ -85,6 +101,8 @@ function setSummary(field, value) {
 
 getStickers().forEach((sticker) => {
   sticker.addEventListener("click", async () => {
+    if (isLocked) return;
+
     try {
       const response = await fetch(`/${sticker.dataset.id}`, {
         method: "PATCH",
@@ -142,10 +160,14 @@ themeToggle.addEventListener("click", () => {
 });
 
 function editRow(id) {
+  if (isLocked) return;
+
   const row = document.getElementById(`row-${id}`);
+
   row
     .querySelectorAll(".view-mode")
     .forEach((td) => (td.style.display = "none"));
+
   row.querySelector(".edit-mode").style.display = "";
 }
 
@@ -165,7 +187,9 @@ packsToggle.addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   if (window.twemoji) {
-    twemoji.parse(document.body);
+    document.querySelectorAll(".section-flag").forEach((flag) => {
+      twemoji.parse(flag);
+    });
   }
 });
 
