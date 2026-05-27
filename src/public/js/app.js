@@ -364,6 +364,72 @@ sortBtns.forEach((btn) => {
   });
 });
 
+function normalizeText(text) {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput?.addEventListener("input", () => {
+  const term = normalizeText(searchInput.value.trim());
+
+  const sections = document.querySelectorAll(".album-section");
+  const chips = document.querySelectorAll(".country-chip");
+
+  if (term.length < 2) {
+    sections.forEach((section) => {
+      section.classList.remove("hidden");
+    });
+
+    chips.forEach((chip) => {
+      chip.classList.remove("hidden");
+    });
+
+    applyCurrentFilter();
+
+    return;
+  }
+
+  sections.forEach((section) => {
+    const country = normalizeText(section.dataset.country || "");
+    const code = normalizeText(section.dataset.code || "");
+
+    const matches = country.includes(term) || code.includes(term);
+
+    section.classList.toggle("hidden", !matches);
+  });
+
+  chips.forEach((chip) => {
+    const country = normalizeText(chip.dataset.country || "");
+    const code = normalizeText(chip.dataset.code || "");
+
+    const matches = country.includes(term) || code.includes(term);
+
+    chip.classList.toggle("hidden", !matches);
+  });
+});
+
+const clearSearchBtn = document.getElementById("clearSearchBtn");
+
+clearSearchBtn?.addEventListener("click", () => {
+  searchInput.value = "";
+
+  document.querySelectorAll(".album-section").forEach((section) => {
+    section.classList.remove("hidden");
+  });
+
+  document.querySelectorAll(".country-chip").forEach((chip) => {
+    chip.classList.remove("hidden");
+  });
+
+  applyCurrentFilter();
+
+  searchInput.focus();
+});
+
 updateCounters();
 applyCurrentFilter();
 updateSectionCounters();

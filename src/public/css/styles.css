@@ -88,10 +88,15 @@ html {
 }
 
 .header-row {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  padding: 12px 0;
+  background: var(--bg);
 }
 
 .header-row h1 {
@@ -521,7 +526,8 @@ h1 {
 .sort-btn {
   flex: 1;
   background: var(--bg-surface);
-  color: var(--text-main);
+  color: var(--text-muted);
+  font-weight: 600;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 8px 12px;
@@ -533,8 +539,53 @@ h1 {
 }
 
 .sort-btn.active {
-  border-color: var(--gold);
-  font-weight: 600;
+  color: var(--text-main);
+}
+
+.search-container {
+  margin: 14px 0;
+  background: var(--bg-surface);
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 15px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  flex: 1;
+}
+
+.clear-search-btn {
+  background: var(--bg-surface);
+  color: var(--text-main);
+  height: 42px;
+  width: 42px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .copy-btn {
