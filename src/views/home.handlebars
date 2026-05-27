@@ -22,6 +22,18 @@
         <button class="btn" data-filter="have">Repetidas</button>
       </div>
 
+      <div class="sort-toolbar">
+        <button class="sort-btn active" data-sort="world">
+          🌍 Mundial
+        </button>
+        <button class="sort-btn" data-sort="alphabetical">
+          🔤 A-Z
+        </button>
+        <button class="sort-btn" data-sort="code">
+          🔠 Codigo
+        </button>
+      </div>
+
       <div class="extra-actions">
         <button id="copyMissingBtn" class="copy-btn">
           Copiar faltantes
@@ -34,9 +46,17 @@
         </button>
       </div>
 
-      <div class="countries-nav">
+      <div class="countries-nav" id="countriesNav">
         {{#each groupedStickers}}
-          <a class="country-chip" href="#section-{{@key}}">{{@key}}</a>
+        <a
+          class="country-chip"
+          href="#section-{{@key}}"
+          data-country="{{name}}"
+          data-code="{{code}}"
+          data-order="{{@index}}"
+        >
+          {{@key}}
+        </a>
         {{/each}}
       </div>
 
@@ -139,22 +159,25 @@
           </div>
         </div>
       </div>
-
+      
+      <div id="sectionsContainer">
       {{#each groupedStickers}}
         <section
           class="album-section"
           id="section-{{@key}}"
           data-name="{{code}} {{#if flag}}{{flag}}{{else}}📜{{/if}}"
+          data-country="{{name}}"
+          data-code="{{code}}"
         >
           <div class="section-header">
             <h2 class="section-title">
               {{code}} - {{name}}
-
               {{#if flag}}
-                <span class="section-flag">{{flag}}</span>
+                <span class="section-flag">
+                  {{flag}}
+                </span>
               {{/if}}
             </h2>
-
             <span
               class="section-progress"
               data-total="{{total}}"
@@ -162,7 +185,6 @@
               {{completed}}/{{total}}
             </span>
           </div>
-
           <div class="stickers-grid">
             {{#each stickers}}
               <div
@@ -176,6 +198,7 @@
           </div>
         </section>
       {{/each}}
+      </div>
     </div>
 
     <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">↑</button>

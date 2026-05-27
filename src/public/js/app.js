@@ -83,7 +83,10 @@ function applyCurrentFilter() {
   getStickers().forEach((sticker) => {
     const status = sticker.dataset.status;
 
+    const isSpecial = sticker.textContent.trim().startsWith("FWC");
+
     const show =
+      isSpecial ||
       filter === "all" ||
       (filter === "missing" && status === "missing") ||
       (filter === "have" && status === "duplicate");
@@ -188,7 +191,10 @@ packsToggle.addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", () => {
   if (window.twemoji) {
     document.querySelectorAll(".section-flag").forEach((flag) => {
-      twemoji.parse(flag);
+      twemoji.parse(flag, {
+        folder: "svg",
+        ext: ".svg",
+      });
     });
   }
 });
@@ -291,6 +297,72 @@ function updateSectionCounters() {
     }
   });
 }
+
+const sortBtns = document.querySelectorAll(".sort-btn");
+const container = document.getElementById("sectionsContainer");
+
+const originalSections = [...document.querySelectorAll(".album-section")];
+
+const countriesNav = document.getElementById("countriesNav");
+
+const originalChips = [...document.querySelectorAll(".country-chip")];
+
+sortBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    sortBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const mode = btn.dataset.sort;
+
+    let sortedSections = [];
+    let sortedChips = [];
+
+    if (mode === "world") {
+      sortedSections = [...originalSections];
+      sortedChips = [...originalChips];
+    }
+
+    if (mode === "alphabetical") {
+      sortedSections = [...originalSections].sort((a, b) => {
+        if (a.dataset.code === "FWC") return -1;
+        if (b.dataset.code === "FWC") return 1;
+
+        return a.dataset.country.localeCompare(b.dataset.country);
+      });
+
+      sortedChips = [...originalChips].sort((a, b) => {
+        if (a.dataset.code === "FWC") return -1;
+        if (b.dataset.code === "FWC") return 1;
+
+        return a.dataset.country.localeCompare(b.dataset.country);
+      });
+    }
+
+    if (mode === "code") {
+      sortedSections = [...originalSections].sort((a, b) => {
+        if (a.dataset.code === "FWC") return -1;
+        if (b.dataset.code === "FWC") return 1;
+
+        return a.dataset.code.localeCompare(b.dataset.code);
+      });
+
+      sortedChips = [...originalChips].sort((a, b) => {
+        if (a.dataset.code === "FWC") return -1;
+        if (b.dataset.code === "FWC") return 1;
+
+        return a.dataset.code.localeCompare(b.dataset.code);
+      });
+    }
+
+    sortedSections.forEach((section) => {
+      container.appendChild(section);
+    });
+
+    sortedChips.forEach((chip) => {
+      countriesNav.appendChild(chip);
+    });
+  });
+});
 
 updateCounters();
 applyCurrentFilter();

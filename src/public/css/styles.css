@@ -512,6 +512,31 @@ h1 {
   gap: 12px;
 }
 
+.sort-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sort-btn {
+  flex: 1;
+  background: var(--bg-surface);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.sort-btn.active {
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
 .copy-btn {
   width: 100%;
   margin-bottom: 20px;
@@ -537,6 +562,12 @@ h1 {
 .section-title {
   color: var(--accent);
   font-size: 1.5rem;
+}
+
+.section-flag img.emoji {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
 }
 
 .stickers-grid {
