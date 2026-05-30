@@ -83,10 +83,7 @@ function applyCurrentFilter() {
   getStickers().forEach((sticker) => {
     const status = sticker.dataset.status;
 
-    const isSpecial = sticker.textContent.trim().startsWith("FWC");
-
     const show =
-      isSpecial ||
       filter === "all" ||
       (filter === "missing" && status === "missing") ||
       (filter === "have" && status === "duplicate");
